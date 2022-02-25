@@ -1,0 +1,25 @@
+﻿@page "/products"
+@using System.Net.Http
+@using BlazorApp.Servicios
+@inject HttpClient Http
+
+<h3>Productos</h3>
+
+<table class = "Table">
+    @foreach (var item in product)
+   {
+       <tr>
+           <td>@item.Id</td>
+           <td>@item.Nombre</td>
+       </tr>
+   }
+</table>
+
+@code {
+    public string Url = "/api/Product";
+
+    public List<ProductBlazor> product = new List<ProductBlazor>();
+    protected override async Task OnInitializedAsync() => 
+                            product = await Http.GetFromJsonAsync<List<ProductBlazor>>(Url);
+
+} 
